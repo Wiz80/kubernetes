@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs-test
+  labels:
+    app: rs-test
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: python
+        image: python:3.6-alpine
+        command: ['sh', '-c', 'echo cont1 > index.html && python -m http.server 8082']
+      - name: python2
+        image: python:3.6-alpine
+        command: ['sh', '-c', 'echo cont2 > index.html && python -m http.server 8083']
+
